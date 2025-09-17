@@ -1,14 +1,17 @@
-import express, { Request, Response, NextFunction } from "express";
-import { AppError } from "./types/AppError";
+import express from "express";
 import { setupGracefulShutdown } from "./utils/shutdown";
 import CONFIG from "./config";
-import logger, { morganFormat } from "./config/logger";
+import logger from "./config/logger";
+import { reqLogger } from "./config/reqLogger";
+import cookieParser from "cookie-parser";
 
-import morgan from "morgan";
 import helmet from "helmet";
 import cors from "cors";
+import errorHandler from "./middleware/errorHandler";
 
-const app = express();
+import indexRouter from "./routes/index.routes";
+
+export const app = express();
 
 app.use(helmet());
 app.use(
@@ -19,36 +22,15 @@ app.use(
   })
 );
 
-app.use(
-  morgan(morganFormat, {
-    stream: {
-      write: (message: string) => {
-        logger.info(message.trim());
-      },
-    },
-  })
-);
-
+app.use(reqLogger);
+app.use(cookieParser());
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (req: Request, res: Response) => {
-  res
-    .status(200)
-    .send({ message: `Hello from ${CONFIG.SERVICE_NAME} service` });
-});
+app.use(indexRouter);
 
-app.get("/health", (req: Request, res: Response) => {
-  throw new AppError("Unauthorized", 400);
-});
-
-app.use((err: AppError, req: Request, res: Response, next: NextFunction) => {
-  logger.error(err.message);
-  res
-    .status(err.status || 500)
-    .send({ success: false, message: err.message || "Internal Server Error" });
-});
+app.use(errorHandler);
 
 const server = app.listen(CONFIG.PORT, () => {
   logger.info(` ${CONFIG.SERVICE_NAME} running on port ${CONFIG.PORT}`);

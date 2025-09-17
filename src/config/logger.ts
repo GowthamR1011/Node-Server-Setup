@@ -17,6 +17,3 @@ const logger = winston.createLogger({
 });
 
 export default logger;
-
-export const morganFormat =
-  ":method :url :status :res[content-length] - :response-time ms";

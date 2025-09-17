@@ -2,6 +2,7 @@ import { AppError } from "../types/AppError";
 import { NextFunction, Request, Response } from "express";
 
 import logger from "../config/logger";
+import { errorServerResponse } from "../utils/responseFormatter";
 
 const errorHandler = (
   err: AppError,
@@ -10,9 +11,8 @@ const errorHandler = (
   next: NextFunction
 ) => {
   logger.error(err.message);
-  res
-    .status(err.status || 500)
-    .send({ success: false, message: err.message || "Internal Server Error" });
+
+  return errorServerResponse(res, err.message, err.status);
 };
 
 export default errorHandler;

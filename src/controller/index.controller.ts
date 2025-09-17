@@ -1,11 +1,17 @@
 import { Request, Response } from "express";
 
 import CONFIG from "../config";
+import { successMessageResponse } from "../utils/responseFormatter";
+import { AppError } from "../types/AppError";
 
 export const welcome = (req: Request, res: Response) => {
-  res.send(`welcome to the ${CONFIG.SERVICE_NAME} server`);
+  return successMessageResponse(
+    res,
+    `Welcome to the ${CONFIG.SERVICE_NAME} server`,
+    200
+  );
 };
 
 export const healthCheck = (req: Request, res: Response) => {
-  res.status(400).send("Unauthorised");
+  throw new AppError("UnAuthorised", 401);
 };

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
-import CONFIG from "../config";
-import { successMessageResponse } from "../utils/responseFormatter";
+import CONFIG from "../config/index.config";
+import { successMessageResponse } from "../handlers/serverResponse.handler";
 import { AppError } from "../types/AppError";
 
 export const welcome = (req: Request, res: Response) => {

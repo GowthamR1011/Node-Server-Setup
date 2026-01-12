@@ -2,7 +2,7 @@ import { AppError } from "../types/AppError";
 import { NextFunction, Request, Response } from "express";
 
 import logger from "../config/logger";
-import { errorServerResponse } from "../utils/responseFormatter";
+import { errorServerResponse } from "./serverResponse.handler";
 
 const errorHandler = (
   err: AppError,

@@ -12,5 +12,6 @@
     "resolveJsonModule": true,
     "typeRoots": ["./src/types", "./node_modules/@types"],
     "moduleResolution": "nodenext"
-  }
+  },
+  "exclude": ["prisma.config.ts"]
 }

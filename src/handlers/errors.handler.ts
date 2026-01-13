@@ -1,8 +1,13 @@
-import { AppError } from "../types/AppError";
-import { NextFunction, Request, Response } from "express";
-
 import logger from "../config/logger";
+import { Request, Response, NextFunction } from "express";
+
 import { errorServerResponse } from "./serverResponse.handler";
+import { AppError } from "../types/AppError";
+
+const notFoundHandler = (req: Request, res: Response, next: NextFunction) => {
+  logger.error("Invalid API URL");
+  return errorServerResponse(res, "Not Found", 404);
+};
 
 const errorHandler = (
   err: AppError,
@@ -10,9 +15,11 @@ const errorHandler = (
   res: Response,
   next: NextFunction
 ) => {
-  logger.error(err.message);
+  const statusCode = err.status || 500;
+  const message = err.message || "Internal Server Error";
 
-  return errorServerResponse(res, err.message, err.status);
+  logger.error(message);
+  return errorServerResponse(res, message, statusCode, err.data);
 };
 
-export default errorHandler;
+export { notFoundHandler, errorHandler };

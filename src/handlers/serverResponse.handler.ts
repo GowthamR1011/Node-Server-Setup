@@ -12,11 +12,12 @@ import { Response } from "express";
 const errorServerResponse = (
   res: Response,
   errorMessage = "Internal Server Error",
-  statusCode = 500
+  statusCode = 500,
+  data: object = {}
 ) => {
   return res
     .status(statusCode || 500)
-    .json({ error: { message: errorMessage }, success: false });
+    .json({ error: { message: errorMessage, ...data }, success: false });
 };
 
 /**

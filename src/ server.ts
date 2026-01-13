@@ -4,7 +4,7 @@ import cookieParser from "cookie-parser";
 
 import helmet from "helmet";
 import cors from "cors";
-import errorHandler from "./handlers/errors.handler";
+import { errorHandler, notFoundHandler } from "./handlers/errors.handler";
 
 import indexRouter from "./routes/index.routes";
 
@@ -26,6 +26,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(indexRouter);
+
+app.use(notFoundHandler);
 
 app.use(errorHandler);
 

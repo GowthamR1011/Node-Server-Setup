@@ -1,12 +1,13 @@
 import express from "express";
-import { reqLogger } from "./config/reqLogger";
-import cookieParser from "cookie-parser";
-
 import helmet from "helmet";
 import cors from "cors";
-import { errorHandler, notFoundHandler } from "./handlers/errors.handler";
 
-import indexRouter from "./routes/index.routes";
+import { reqLogger } from "./config/logging/reqLogger.config.js";
+import cookieParser from "cookie-parser";
+
+import { errorHandler, notFoundHandler } from "./handlers/errors.handler.js";
+import requestIdAssigner from "./middleware/requestID.middleware.js";
+import indexRouter from "./routes/index.routes.js";
 
 export const app = express();
 
@@ -19,6 +20,7 @@ app.use(
   })
 );
 
+app.use(requestIdAssigner);
 app.use(reqLogger);
 app.use(cookieParser());
 app.use(express.json());

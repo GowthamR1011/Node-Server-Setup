@@ -1,7 +1,7 @@
-import app from "./ server";
-import CONFIG from "./config/index.config";
-import logger from "./config/logger";
-import { setupGracefulShutdown } from "./utils/shutdown";
+import app from "./ server.js";
+import CONFIG from "./config/index.config.js";
+import logger from "./config/logging/logger.config.js";
+import { setupGracefulShutdown } from "./utils/shutdown.js";
 
 const server = app.listen(CONFIG.PORT, () => {
   logger.debug(` ${CONFIG.SERVICE_NAME} running on port ${CONFIG.PORT}`);

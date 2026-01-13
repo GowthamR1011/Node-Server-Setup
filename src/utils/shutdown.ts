@@ -1,5 +1,5 @@
 import { Server } from "http";
-import logger from "../config/logger";
+import logger from "../config/logging/logger.config.js";
 
 type CleanupFn = () => Promise<void> | void;
 

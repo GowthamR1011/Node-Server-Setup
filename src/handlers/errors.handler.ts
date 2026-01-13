@@ -1,8 +1,8 @@
-import logger from "../config/logger";
+import logger from "../config/logging/logger.config.js";
 import { Request, Response, NextFunction } from "express";
 
-import { errorServerResponse } from "./serverResponse.handler";
-import { AppError } from "../types/AppError";
+import { errorServerResponse } from "./serverResponse.handler.js";
+import { AppError } from "../types/AppError.js";
 
 const notFoundHandler = (req: Request, res: Response, next: NextFunction) => {
   logger.error("Invalid API URL");

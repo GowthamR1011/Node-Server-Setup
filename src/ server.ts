@@ -1,14 +1,16 @@
 import express from "express";
 import helmet from "helmet";
 import cors from "cors";
-
-import { reqLogger } from "./config/logging/reqLogger.config.js";
 import cookieParser from "cookie-parser";
 
-import { errorHandler, notFoundHandler } from "./handlers/errors.handler.js";
+import reqLogger from "./config/logging/reqLogger.config.js";
+
 import requestIdAssigner from "./middleware/requestID.middleware.js";
-import indexRouter from "./routes/index.routes.js";
 import setRequestContext from "./middleware/requestContext.middleware.js";
+
+import { errorHandler, notFoundHandler } from "./handlers/errors.handler.js";
+
+import indexRouter from "./routes/index.routes.js";
 
 export const app = express();
 

@@ -8,6 +8,7 @@ import cookieParser from "cookie-parser";
 import { errorHandler, notFoundHandler } from "./handlers/errors.handler.js";
 import requestIdAssigner from "./middleware/requestID.middleware.js";
 import indexRouter from "./routes/index.routes.js";
+import setRequestContext from "./middleware/requestContext.middleware.js";
 
 export const app = express();
 
@@ -21,6 +22,7 @@ app.use(
 );
 
 app.use(requestIdAssigner);
+app.use(setRequestContext);
 app.use(reqLogger);
 app.use(cookieParser());
 app.use(express.json());

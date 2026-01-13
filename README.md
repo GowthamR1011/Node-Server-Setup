@@ -1,6 +1,6 @@
 # Node Server Setup Template
 
-A robust, ready-to-fork **Node.js** server setup with **TypeScript, Express**, and essential libraries for building scalable services. This template provides a solid foundation for new projects and microservices, featuring best practices for logging, error handling, security, and graceful shutdown.
+A robust, ready-to-fork **Node.js** server setup with **TypeScript, Express**, and essential libraries for building scalable services. This template provides a solid foundation for new projects and microservices, featuring best practices for logging, error handling, security, database access, and graceful shutdown.
 
 ---
 
@@ -10,10 +10,15 @@ A robust, ready-to-fork **Node.js** server setup with **TypeScript, Express**, a
 - **Express**: Fast, minimalist web framework
 - **Helmet**: Security headers for HTTP
 - **CORS**: Cross-origin resource sharing configuration
-- **Morgan + Winston**: Advanced logging to console and files
+- **Cookie Parser**: Cookie parsing middleware
+- **Morgan + Winston**: HTTP and application logging (Morgan integrated with Winston)
 - **Dotenv**: Environment variable management
-- **Graceful Shutdown**: Handles SIGINT/SIGTERM, uncaught exceptions, and cleanup
-- **Custom Error Handling**: Centralized error responses
+- **Prisma**: ORM and generated client for database access (Neon / PostgreSQL compatible)
+- **Zod**: Runtime input validation and schema parsing
+- **UUID**: Request ID assignment (`uuid`)
+- **AsyncLocalStorage**: Per-request context (request id, IP, user id)
+- **Graceful Shutdown**: Handles SIGINT/SIGTERM, uncaught exceptions, and resource cleanup
+- **Custom Error Handling**: Centralized error responses via `AppError`
 - **Nodemon**: Hot-reloading for development
 
 ---
@@ -39,6 +44,12 @@ Create a `.env` file in the root directory:
 
 ```env
 PORT=4000
+```
+
+If you plan to use Prisma/Database, add a `DATABASE_URL` to your `.env` (Postgres/Neon example):
+
+```env
+DATABASE_URL=postgresql://USER:PASSWORD@HOST:5432/DATABASE
 ```
 
 ### 4. Run in Development
@@ -76,6 +87,14 @@ npm start
 └── README.md
 ```
 
+Additional files you may see in this template when using DB features:
+
+```
+├── prisma/
+│   └── schema.prisma         # Prisma schema (models, datasource)
+├── src/prisma.ts             # Prisma client wrapper (exports `prisma`)
+```
+
 ---
 
 ## API Endpoints
@@ -83,11 +102,13 @@ npm start
 - `GET /` — A welcome endpoint returns a welcome message
 - `GET /health` — An Endpoint that is used to check the health of the service
 
+You can add routes under `src/` and wire them into the Express app in `src/index.ts`.
+
 ---
 
 ## Logging
 
-- **Winston** logs to console and files (`logs/combined.log`, `logs/error.log`)
+- **Winston** logs to console and files (`logs/application.log`)
 - **Morgan** HTTP request logging integrated with Winston
 
 ---
@@ -95,6 +116,33 @@ npm start
 ## Graceful Shutdown
 
 Handles process signals and errors to ensure clean server exit and resource cleanup.
+
+## Prisma / Database Notes
+
+- Install Prisma and generate the client after installing dependencies:
+
+```bash
+npm install prisma --save-dev
+npm install @prisma/client
+npx prisma generate
+```
+
+- To apply schema changes to a database you can use:
+
+```bash
+# push schema (no migrations):
+npx prisma db push
+
+# or create a migration and apply (for development):
+npx prisma migrate dev --name init
+```
+
+## Customization
+
+- Add routes/services in `src/`
+- Extend error handling in `src/types/AppError.ts`
+- Configure logger in `src/config/logger.ts`
+- Add environment variables in `.env`
 
 ---
 

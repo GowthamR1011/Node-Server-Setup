@@ -47,5 +47,8 @@
     "uuid": "^13.0.0",
     "winston": "^3.17.0",
     "zod": "^4.3.5"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

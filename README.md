@@ -170,6 +170,7 @@ Fork, create a feature branch, and submit a pull request! Issues and suggestions
 ## Author
 
 Created by [Gowtham Ravichander](https://github.com/GowthamR1011)
+Published to NPM
 
 ---
 

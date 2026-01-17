@@ -1,9 +1,9 @@
 {
-  "name": "node-server-setup",
+  "name": "@gowthamr1011/node-server-template",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "private": true,
+  "private": false,
   "scripts": {
     "start": "tsc && node ./dist/index.js",
     "dev": "nodemon",
@@ -12,12 +12,16 @@
   },
   "keywords": [],
   "author": "",
+  "bin": {
+    "node-server-setup": "./dist/cli.js"
+  },
   "license": "ISC",
   "type": "module",
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/github": "^11.0.6",
+    "@semantic-release/npm": "^12.0.2",
     "@types/axios": "^0.9.36",
     "@types/cookie-parser": "^1.4.9",
     "@types/cors": "^2.8.19",

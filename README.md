@@ -170,7 +170,7 @@ Fork, create a feature branch, and submit a pull request! Issues and suggestions
 ## Author
 
 Created by [Gowtham Ravichander](https://github.com/GowthamR1011)
-Published to NPM
+Published to NPM.
 
 ---
 
@@ -183,3 +183,4 @@ Published to NPM
 - [Helmet](https://helmetjs.github.io/)
 - [Dotenv](https://github.com/motdotla/dotenv)
 - [Nodemon](https://nodemon.io/)
+- [SemanticRelease](https://semantic-release.gitbook.io/semantic-release/)
